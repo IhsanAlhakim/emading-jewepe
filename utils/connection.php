@@ -1,8 +1,8 @@
 <?php
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$dbname = "db_jewepe";
+$hostname = $_ENV["HOSTNAME"];
+$username = $_ENV["USERNAME"];
+$password = $_ENV["PASSWORD"];
+$dbname = $_ENV["DATABASE"];
 
 // Melakukan koneksi ke database db_jewepe
 $conn = mysqli_connect($hostname, $username, $password, $dbname);
