@@ -1,9 +1,10 @@
 <?php
-require '../utils/database-functions.php';
+require "../utils/database-functions.php";
 
+// Ambil data id dari URL
 $id = $_GET["id"];
 
-
+// Cek apakah data berhasil dihapus
 if (delete($id) > 0) {
     echo "
     <script>

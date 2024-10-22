@@ -1,13 +1,14 @@
 <?php
-require 'utils/database-functions.php';
+require "utils/database-functions.php";
 
-// ambil data di url
+// Ambil data id dari URL
 $id = $_GET["id"];
 
-// query data mahasiswa berdasarkan id/ambil data dari database
-// [0] = langsung ambil indeks 0
+// Ambil data artikel dari database sesuai id
 $article = query("SELECT * FROM tb_article WHERE article_id = '$id'")[0];
-$adminId = $article['admin_id'];
+$adminId = $article["admin_id"];
+
+// Ambil data admin pembuat artikel
 $adminData = query("SELECT * FROM tb_admin WHERE admin_id = '$adminId'")[0];
 ?>
 
@@ -41,7 +42,7 @@ $adminData = query("SELECT * FROM tb_admin WHERE admin_id = '$adminId'")[0];
         </article>
     </main>
 
-    <?php include 'template/footer.php' ?>
+    <?php include "template/footer.php" ?>
     <script src="scripts/bootstrap.bundle.js"></script>
 </body>
 

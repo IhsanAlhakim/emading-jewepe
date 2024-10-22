@@ -1,16 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION['login'])) {
-    header('location: login.php');
+
+// Cek apakah sudah login 
+if (!isset($_SESSION["login"])) {
+    header("location: login.php");
 }
 
-require '../utils/database-functions.php';
+require "../utils/database-functions.php";
 
-// cek apakah tombol submit sudah ditekan
+// Cek apakah tombol submit sudah ditekan
 if (isset($_POST["submit"])) {
 
-    // cek apakah data berhasil ditambahkan
-    if (add($_POST, $_SESSION['admin']) > 0) {
+    // Cek apakah data berhasil ditambahkan
+    if (add($_POST, $_SESSION["admin"]) > 0) {
         echo "
         <script>
             alert('data berhasil ditambahkan!');
@@ -26,18 +28,6 @@ if (isset($_POST["submit"])) {
         ";
     }
 }
-
-?>
-
-<?php
-// session_start();
-// if (!isset($_SESSION['login'])) {
-//     header('location: login.php');
-// }
-
-// require '../utils/database-functions.php';
-
-// $articles = query("SELECT * FROM tb_article");
 ?>
 
 <!DOCTYPE html>
@@ -50,8 +40,8 @@ if (isset($_POST["submit"])) {
     <link rel="stylesheet" href="../styles/bootstrap.css">
     <link rel="stylesheet" href="../styles/main.css">
     <script type="text/javascript" src="../scripts/jquery-3.7.1.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <link href="../styles/summernote-lite.min.css" rel="stylesheet">
+    <script src="../scripts/summernote-lite.min.js"></script>
 </head>
 
 <body>
@@ -62,7 +52,7 @@ if (isset($_POST["submit"])) {
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label h6">Judul</label>
-                    <input type="text" class="form-control" id="title" name="title">
+                    <input type="text" class="form-control" id="title" name="title" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label h6" for="image">Gambar</label>
@@ -70,11 +60,11 @@ if (isset($_POST["submit"])) {
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label h6">Isi Artikel</label>
-                    <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+                    <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
                 </div>
                 <div class="mb-3">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="publish" value="published">
+                        <input class="form-check-input" type="radio" name="status" id="publish" value="published" required>
                         <label class="form-check-label" for="publish">Publish</label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -86,21 +76,22 @@ if (isset($_POST["submit"])) {
             </form>
         </section>
     </main>
-    <?php include '../template/footer.php'; ?>
-
+    <?php include "../template/footer.php"; ?>
+    <script src="../scripts/bootstrap.bundle.js"></script>
     <script>
-        $('#content').summernote({
-            placeholder: 'Isi Artikel Disini',
+        // Menambahkan text editor
+        $("#content").summernote({
+            placeholder: "Isi Artikel Disini",
             tabsize: 2,
             height: 200,
             toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
+                ["style", ["style"]],
+                ["font", ["bold", "underline", "clear"]],
+                ["color", ["color"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["insert", ["link", "picture", "video"]],
+                ["view", ["fullscreen", "codeview", "help"]]
             ]
         });
     </script>

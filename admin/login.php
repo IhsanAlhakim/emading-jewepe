@@ -1,51 +1,54 @@
 <?php
 session_start();
-require '../utils/database-functions.php';
 
-if (isset($_COOKIE['id']) && isset($_COOKIE['username'])) {
-    $id = $_COOKIE['id'];
-    $username = $_COOKIE['username'];
+require "../utils/database-functions.php";
 
-    //ambil username berdasarkan id
+// Cek apakah cookie dari login sebelumnya ada
+if (isset($_COOKIE["id"]) && isset($_COOKIE["username"])) {
+    $id = $_COOKIE["id"];
+    $username = $_COOKIE["username"];
+
+    //Ambil username berdasarkan id
     $result = mysqli_query($conn, "SELECT username FROM tb_admin WHERE admin_id = $id");
 
     $row = mysqli_fetch_assoc($result);
 
-    //cek cookie dan username
-    if ($username === hash('sha256', $row['username'])) {
-        $_SESSION['login'] = true;
-        $_SESSION['admin'] = $row['admin_id'];
+    //Cek username
+    if ($username === hash("sha256", $row["username"])) {
+        $_SESSION["login"] = true;
+        $_SESSION["admin"] = $row["admin_id"];
     }
 }
 
-if (isset($_SESSION['login'])) {
-    header('location: index.php');
+// Cek apakah sudah login sebelumnya dalam satu sesi
+if (isset($_SESSION["login"])) {
+    header("location: index.php");
 }
 
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+// Cek apakah tombol login sudah ditekan
+if (isset($_POST["login"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
+    // Mencari data admin sesuai username
     $result = mysqli_query($conn, "SELECT * FROM tb_admin WHERE username = '$username'");
 
-    //cek username
+    //Cek apakah ada data admin yang sesuai
     if (mysqli_num_rows($result) === 1) {
 
-        //cek password
+        //Cek password
         $row = mysqli_fetch_assoc($result);
-        if ($password === $row['password']) {
-            //set session
-            $_SESSION['login'] = true;
-            $_SESSION['admin'] = $row['admin_id'];
+        if ($password === $row["password"]) {
+            $_SESSION["login"] = true;
+            $_SESSION["admin"] = $row["admin_id"];
 
-            //cek remember me
-            if (isset($_POST['remember'])) {
-                //buat cookie
-                setcookie('id', $row['admin_id'], time() + 60);
-                setcookie('username', hash('sha256', $row['username']), time() + 60);
+            // Cek remember me
+            if (isset($_POST["remember"])) {
+                setcookie("id", $row["admin_id"], time() + 60);
+                setcookie("username", hash("sha256", $row["username"]), time() + 60);
             }
 
-            header('location: index.php');
+            header("location: index.php");
             exit;
         }
     }
@@ -78,7 +81,8 @@ if (isset($_POST['login'])) {
                                     <div class="mb-3">
                                         <h3>Log In Admin</h3>
                                     </div>
-                                    <?php if (isset($error)) { ?>
+                                    <?php if (isset($error)) { //Menampilkan pesan kesalahan jika username/password salah
+                                    ?>
                                         <p style="color: red;">username / password salah</p>
                                     <?php } ?>
                                 </div>

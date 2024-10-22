@@ -1,6 +1,7 @@
 <?php
-require 'utils/database-functions.php';
+require "utils/database-functions.php";
 
+// Ambil data artikel dari database yang statusnya published
 $articles = query("SELECT * FROM tb_article WHERE status = 'published'");
 $articles = array_reverse($articles);
 
@@ -44,6 +45,7 @@ $articles = array_reverse($articles);
                                 <h5 class="card-title"><?= $article["title"] ?></h5>
                                 <p class="card-text">
                                     <?php
+                                    // Ambil sebagian kalimat dari isi artikel
                                     $content = $article["content"];
                                     $textContent =
                                         strip_tags(html_entity_decode($content));
@@ -61,7 +63,7 @@ $articles = array_reverse($articles);
             <?php $i++; ?>
         <?php endforeach; ?>
     </main>
-    <?php include 'template/footer.php' ?>
+    <?php include "template/footer.php" ?>
     <script src="scripts/bootstrap.bundle.js"></script>
 </body>
 

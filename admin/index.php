@@ -1,14 +1,19 @@
 <?php
 session_start();
-if (!isset($_SESSION['login'])) {
-    header('location: login.php');
+
+// Cek apakah sudah login
+if (!isset($_SESSION["login"])) {
+    header("location: login.php");
 }
 
-require '../utils/database-functions.php';
+require "../utils/database-functions.php";
 
+// Ambil semua data artikel dari database
 $articles = query("SELECT * FROM tb_article");
 $articles = array_reverse($articles);
-$adminId = $_SESSION['admin'];
+
+// Ambil data admin yang login
+$adminId = $_SESSION["admin"];
 $adminData = query("SELECT * FROM tb_admin WHERE admin_id = '$adminId'")[0];
 
 ?>
@@ -25,7 +30,7 @@ $adminData = query("SELECT * FROM tb_admin WHERE admin_id = '$adminId'")[0];
 </head>
 
 <body>
-    <?php include 'template/navbar-admin.php'; ?>
+    <?php include "template/navbar-admin.php"; ?>
     <main class="main-admin container py-3 px-5">
         <div class="container-fluid shadow-sm px-5 py-3 my-3 bg-white d-flex align-items-center rounded">
             <h1 class="m-0">Selamat Datang, <?= $adminData["name"] ?>!</h1>
@@ -70,7 +75,7 @@ $adminData = query("SELECT * FROM tb_admin WHERE admin_id = '$adminId'")[0];
             </table>
         </section>
     </main>
-    <?php include '../template/footer.php' ?>
+    <?php include "../template/footer.php" ?>
     <script src="../scripts/bootstrap.bundle.js"></script>
 </body>
 

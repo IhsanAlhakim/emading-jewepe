@@ -1,5 +1,8 @@
  <footer class="footer mt-auto container-fluid">
      <div class="text-center p-4">
-         © 2023 Copyright JeWePe
+         <?php
+            $year = date('Y');
+            echo "Copyright &copy; " . $year . " JeWePe";
+            ?>
      </div>
  </footer>
